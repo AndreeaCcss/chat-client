@@ -8,7 +8,8 @@ import { url } from "./constants";
 // json sse
 class App extends React.Component {
   state = {
-    text: ""
+    text: "",
+    messages: []
   };
   // evSource is built in brwoser
   source = new EventSource(`${url}/stream`);
@@ -20,6 +21,7 @@ class App extends React.Component {
       console.log("data test:", data);
 
       const messages = JSON.parse(data);
+      this.setState({ messages });
       console.log("mess test", messages);
     };
   }
@@ -41,16 +43,23 @@ class App extends React.Component {
       .send({ text })
       .then(response => {
         console.log(response);
-        this.setState({ test: "" });
+        this.setState({ text: "" });
       })
       .catch(console.error);
   };
   render() {
+    const { messages } = this.state;
+    const items = messages.map((message, index) => (
+      <li key={index}>{message}</li>
+    ));
     return (
-      <form onSubmit={this.onSubmit}>
-        <input type="text" onChange={this.onChange} value={this.state.text} />
-        <button>Send</button>
-      </form>
+      <main>
+        <form onSubmit={this.onSubmit}>
+          <input type="text" onChange={this.onChange} value={this.state.text} />
+          <button>Send</button>
+        </form>
+        <ul>{items}</ul>
+      </main>
     );
   }
 }
