@@ -30,7 +30,7 @@ class App extends React.Component {
       target: { value }
     } = event;
 
-    console.log("val test", value);
+    // console.log("val test", value);
 
     this.setState({ text: value });
   };
@@ -50,7 +50,7 @@ class App extends React.Component {
   render() {
     const { messages } = this.state;
     const items = messages.map((message, index) => (
-      <li key={index}>{message}</li>
+      <li key={index}>{message.text}</li>
     ));
     return (
       <main>
