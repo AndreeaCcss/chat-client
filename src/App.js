@@ -1,5 +1,6 @@
 import React from "react";
 import request from "superagent";
+import { url } from "./constants";
 // connect to stream
 // socket.io for server driven comm or
 // web sockets - dff protocol - doesnt use http
@@ -10,16 +11,16 @@ class App extends React.Component {
     text: ""
   };
   // evSource is built in brwoser
-  source = new EventSource("http://localhost:4000/stream");
+  source = new EventSource(`${url}/stream`);
   componentDidMount() {
     // when we did stream.send was a new event
     // when a new message comes in we run tthis
     this.source.onmessage = event => {
       const { data } = event;
-      console.log("data:", data);
+      console.log("data test:", data);
 
       const messages = JSON.parse(data);
-      console.log("mess", messages);
+      console.log("mess test", messages);
     };
   }
   onChange = event => {
@@ -27,7 +28,7 @@ class App extends React.Component {
       target: { value }
     } = event;
 
-    console.log("val", value);
+    console.log("val test", value);
 
     this.setState({ text: value });
   };
@@ -36,16 +37,19 @@ class App extends React.Component {
     event.preventDefault();
     const { text } = this.state;
     request
-      .post("http://localhost:4000/message")
+      .post(`${url}/message`)
       .send({ text })
-      .then(console.log)
+      .then(response => {
+        console.log(response);
+        this.setState({ test: "" });
+      })
       .catch(console.error);
   };
   render() {
     return (
       <form onSubmit={this.onSubmit}>
         <input type="text" onChange={this.onChange} value={this.state.text} />
-        <button type="button">Send</button>
+        <button>Send</button>
       </form>
     );
   }
