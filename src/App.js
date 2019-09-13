@@ -1,10 +1,9 @@
 import React from "react";
 import request from "superagent";
 import { url } from "./constants";
-import Channels from "./components/Channels";
 import { setChannels } from "./actions";
-import ChannelFormContainer from "./components/ChannelFormContainer,";
 import { connect } from "react-redux";
+import Routes from "./components/Routes";
 // connect to stream
 // socket.io for server driven comm or
 // web sockets - dff protocol - doesnt use http
@@ -33,13 +32,7 @@ class App extends React.Component {
       .catch(console.error);
   };
   render() {
-    return (
-      <main>
-        <ChannelFormContainer />
-        <button onClick={this.onDelete}>Delete</button>
-        <Channels channels={this.props.channels} />
-      </main>
-    );
+    return <Routes />;
   }
 }
 
