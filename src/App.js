@@ -47,6 +47,13 @@ class App extends React.Component {
       })
       .catch(console.error);
   };
+
+  onDelete = () => {
+    request
+      .delete(`${url}/message`)
+      .then(console.log)
+      .catch(console.error);
+  };
   render() {
     const { messages } = this.state;
     const items = messages.map((message, index) => (
@@ -58,6 +65,7 @@ class App extends React.Component {
           <input type="text" onChange={this.onChange} value={this.state.text} />
           <button>Send</button>
         </form>
+        <button onClick={this.onDelete}>Delete</button>
         <ul>{items}</ul>
       </main>
     );
