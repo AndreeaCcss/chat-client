@@ -7,6 +7,7 @@ export default class ChannelFormContainer extends React.Component {
   state = {
     name: ""
   };
+
   onChange = event => {
     const {
       target: { value }
@@ -20,8 +21,7 @@ export default class ChannelFormContainer extends React.Component {
     request
       .post(`${url}/channel`)
       .send({ name })
-      .then(response => {
-        console.log(response);
+      .then(() => {
         this.setState({ name: "" });
       })
       .catch(console.error);
